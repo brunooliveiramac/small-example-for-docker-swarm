@@ -1,27 +1,34 @@
 version: 2
 jobs:
   build:
-    working_directory: /spring-docker
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: circleci/openjdk:8-jdk
+
+
+    working_directory: ~/repo
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
     steps:
       - checkout
       - setup_remote_docker
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "build.gradle" }}
+          - v1-dependencies-
+
+      - run: gradle dependencies
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+
+      - run: gradle test
       - run:
-          name: Install dependencies
+          name: Run Application
           command: |
-            apk add --no-cache py-pip=9.0.0-r1
-            pip install docker-compose==1.15.0
-      - run:
-          name: Run
-          command: |
-            ./gradlew build
             docker-compose up -d
-#      - deploy:
-#          name: Push application Docker image
-#          command: |
-#            docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
-#            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
-#            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:latest
-#            docker push $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
-#            docker push $DOCKER_HUB_USER_ID/dockerapp:latest

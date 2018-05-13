@@ -27,7 +27,7 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      - run: Gradle Tests
+      - run: gradle test
       - run:
           name: Build Dokcer image
           command: ./gradlew build

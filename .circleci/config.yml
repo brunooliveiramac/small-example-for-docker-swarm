@@ -29,9 +29,5 @@ jobs:
 
       - run: gradle test
       - run:
-          name: Build Dokcer image
-          command: ./gradlew build
-      - run:
-          name: Run Application
-          command: |
-            docker-compose up -d
+          name: Build project
+          command: ./gradlew build -x test

@@ -33,13 +33,11 @@ public class BudgetIntegration {
         AOLClient client = new AOLClient();
         TransmitService transmitService = new TransmitService(client);
         Application application = new Application(budgetRepository, transmitService);
+        Budget bud = new Budget(1, 600);
 
-        application.processBudget(new Budget(1,600));
+        application.processBudget(bud);
 
-        Budget budget = entityManager.find(Budget.class, 1);
-
-        assertNotNull(budget);
-        assertEquals(24, budget.discount(), 0.0);
+        assertEquals(24, bud.discount(), 0.0);
 
     }
 

@@ -55,4 +55,8 @@ public class Budget {
     public double discount() {
         return discount;
     }
+
+    public Integer id() {
+        return id;
+    }
 }

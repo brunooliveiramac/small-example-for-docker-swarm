@@ -5,7 +5,7 @@ jobs:
       - image: circleci/openjdk:8-jdk
 
 
-    working_directory: ~/repo
+    working_directory: /dockerapp
 
     environment:
       JVM_OPTS: -Xmx3200m
@@ -31,3 +31,15 @@ jobs:
       - run:
           name: Build project
           command: ./gradlew build -x test
+      - run:
+          name: Build Docker Image
+          command: |
+            docker-compose build
+      - deploy:
+          name: Push application Docker image
+          command: |
+            docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
+            docker tag solidtdd_spring-docker $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
+            docker tag solidtdd_spring-docker $DOCKER_HUB_USER_ID/dockerapp:latest
+            docker push $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
+            docker push $DOCKER_HUB_USER_ID/dockerapp:latest

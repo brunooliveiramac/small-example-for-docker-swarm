@@ -1,6 +1,6 @@
 version: "3.0"
 services:
   spring-docker:
-    build: .
+    image: brunooliveiramac/dockerapp
     ports:
       - "8080:8080"

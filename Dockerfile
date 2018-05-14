@@ -11,3 +11,6 @@ ENV PATH $PATH:/opt/gradle-3.3/bin
 RUN gradle build
 
 EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app/build/libs/solid-tdd-0.0.1-SNAPSHOT.jar"]
+

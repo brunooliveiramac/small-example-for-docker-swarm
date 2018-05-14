@@ -12,5 +12,3 @@ RUN gradle build
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app/build/libs/solid-tdd-0.0.1-SNAPSHOT.jar"]
-

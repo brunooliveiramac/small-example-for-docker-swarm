@@ -4,3 +4,4 @@ services:
     image: brunooliveiramac/dockerapp
     ports:
       - "8080:8080"
+    entrypoint: ["java", "-jar", "app/build/libs/solid-tdd-0.0.1-SNAPSHOT.jar"]

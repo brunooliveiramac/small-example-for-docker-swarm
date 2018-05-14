@@ -26,7 +26,11 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "build.gradle" }}
-
+      - run:
+          name: Install Docker
+          command: |
+            apk add --no-cache py-pip=9.0.0-r1
+            pip install docker-compose==1.15.0
       - run: gradle test
       - run:
           name: Build project

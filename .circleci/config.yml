@@ -19,7 +19,7 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
-            docker login -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
+            docker login --username $DOCKER_HUB_USER_ID --password $DOCKER_HUB_PWD
             docker tag solidtdd_spring-docker $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
             docker tag solidtdd_spring-docker $DOCKER_HUB_USER_ID/dockerapp:latest
             docker push $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1

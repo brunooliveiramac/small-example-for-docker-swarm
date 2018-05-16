@@ -4,3 +4,5 @@ services:
     image: brunooliveiramac/dockerapp
     ports:
       - "8080:8080"
+    deploy:
+      replicas: 2
